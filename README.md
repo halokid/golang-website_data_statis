@@ -16,14 +16,14 @@ the RAW DATA KEY like:
 you can put them into to redis or some other nosql.
 
 the KEY is zset type, the values of the KEY just like
->#shell> ZRANGE li9t27mskklc769vmn88o5appp:1433138814.0488:10.10.10.29:360:0 0 -1
+#shell> ZRANGE li9t27mskklc769vmn88o5appp:1433138814.0488:10.10.10.29:360:0 0 -1
 1) "www.xxxxx.com/help/999"
 2) "www.xxxxx.com"
 3) "www.xxxxx.com/member/xxx"
 4) "www.xxxxx./com/kkki"
 5) "www.xxxxxx..com/goods/list/1020"
 6) "www.xxxxx.com/yyyy"
->
+
 
 
 these values is record the url view
