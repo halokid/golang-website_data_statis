@@ -1,61 +1,97 @@
+/*
+how to use?
+sample:
+if you want to get the ip numbwer data for baidu channel, just run the command like that  
+#shell:  ./statis_data -ip baidu
+
+*/
+
 package main
 
 import (
+	"os"
     "gopkg.in/redis.v3"
 	"fmt"
 //    "strings"
-    "reflect"
+//    "reflect"
 )
 
 
-func ExampleNewClient() {
+/**
+*@author: JJyy
+*@todo:  return the redis client handle
+*@param: 
+*
+**/
+func rds() *redis.Client {
     client := redis.NewClient(&redis.Options {
-        Addr:    "172.16.2.29:6379",
-        Password:    "",
-        DB:    0,
-        
-    })
-    
-    pong, err := client.Ping().Result()
-    fmt.Println(pong, err)
-    
-}
-
-
-
-
-func main() {
-//    ExampleNewClient()
-      client := redis.NewClient(&redis.Options {
-        Addr:    "172.16.2.29:6379",
+        Addr:    "192.168.0.139:6379",
         Password:    "",
         DB:    1,
         
     })
     
-    pong, err := client.Ping().Result()
-    fmt.Println(pong, err)
-    
-    s, err := client.Get("a").Result()
-    if err != nil {
+    return client
+}
+
+
+/**
+*@author: JJyy
+*@todo: check error
+*@param: 
+**/
+func checkErr( err error ) {
+    if err !=nil {
         panic(err)
     }
-    fmt.Println(s)
+}
+
+
+/**
+*@author: JJyy
+*@todo: del repeative element for slice
+*@param: slice point
+*
+**/
+func removeDuplicate(slis *[]string) {
+  found := make(map[string]bool)
+    j := 0
+    for i,val := range *slis {
+      if _,ok := found[val]; !ok {
+          found[val] = true
+          (*slis)[j] = (*slis)[i]
+          j++
+      }
+    }
+  *slis = (*slis)[:j]
+}
+
+
+
+func main() {
+    //get the data type
+    var data_type string
+    data_type = os.Args[1]
     
-    z, err := client.ZRange("li9t209jm7mc6m4vmn88o5a7j0:1454035404.5141:87.56.45.59:yahoo:0", 0, -1).Result()
+    var channel_name string
+    channel_name = os.Args[2]
+//    fmt.Println(data_type)
     
-    if err != nil{
-        panic(err)
+    c := rds()    //redis client struct
+    
+    if data_type == "-ip" {    //get the ip data
+        num := ip(c, channel_name)
+        fmt.Println(num)
+    } else if data_type == "-pv" {
+        num := pv(c, channel_name)
+        fmt.Println(num)
+    } else if data_type == "-uv" {
+        num := uv(c, channel_name)
+        fmt.Println(num)
     }
     
-//    fmt.Print(z)
-    fmt.Print( reflect.TypeOf(z) )
     
-    
-    for k, v := range z {
-        fmt.Println( k, v)
-    }
-    
+    fmt.Println("main process")
 }
 
 
