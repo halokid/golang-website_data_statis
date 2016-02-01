@@ -1,7 +1,7 @@
 /*
 how to use?
 sample:
-if you want to get the ip numbwer data for baidu channel, just run the command like that  
+if you want to get the ip numbwer data for baidu channel, just run the command like that
 #shell:  ./statis_data -ip baidu
 
 */
@@ -12,6 +12,7 @@ import (
 	"os"
     "gopkg.in/redis.v3"
 	"fmt"
+	"strconv"
 //    "strings"
 //    "reflect"
 )
@@ -20,17 +21,18 @@ import (
 /**
 *@author: JJyy
 *@todo:  return the redis client handle
-*@param: 
+*@param:
 *
 **/
 func rds() *redis.Client {
     client := redis.NewClient(&redis.Options {
-        Addr:    "192.168.0.139:6379",
+        // Addr:    "192.168.0.139:6379",
+        Addr:    "172.16.2.29:6379",
         Password:    "",
         DB:    1,
-        
+
     })
-    
+
     return client
 }
 
@@ -38,7 +40,7 @@ func rds() *redis.Client {
 /**
 *@author: JJyy
 *@todo: check error
-*@param: 
+*@param:
 **/
 func checkErr( err error ) {
     if err !=nil {
@@ -72,46 +74,32 @@ func main() {
     //get the data type
     var data_type string
     data_type = os.Args[1]
-    
+
     var channel_name string
     channel_name = os.Args[2]
 //    fmt.Println(data_type)
-    
+
+	// var start_time int
+	start_time_arg := os.Args[3]
+	start_time, _  := strconv.ParseInt(start_time_arg, 10, 32)
+
+	// var end_time int
+	end_time_arg := os.Args[4]
+	end_time, _ := strconv.ParseInt(end_time_arg, 10, 32)
+
     c := rds()    //redis client struct
-    
+
     if data_type == "-ip" {    //get the ip data
-        num := ip(c, channel_name)
+        num := ip(c, channel_name, start_time, end_time)
         fmt.Println(num)
     } else if data_type == "-pv" {
-        num := pv(c, channel_name)
+        num := pv(c, channel_name, start_time, end_time)
         fmt.Println(num)
     } else if data_type == "-uv" {
-        num := uv(c, channel_name)
+        num := uv(c, channel_name, start_time, end_time)
         fmt.Println(num)
     }
-    
-    
+
+
     fmt.Println("main process")
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
