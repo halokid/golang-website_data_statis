@@ -30,7 +30,9 @@ these values is record the url view
 
 
 go run test:
->go run main.go ip.go pv.go uv.go -ip yahoo
+>go run main.go ip.go pv.go uv.go -ip yahoo 1454035404(start time) 1454035490(end time)
+
+if no time choose, just make the start_time=0,  end_time=0
 
 -ip is for ip data statis, you can change to pv, uv...
 yahoo is for the ad channel, you can change to google, baidu or something you have put into RAW DATA
