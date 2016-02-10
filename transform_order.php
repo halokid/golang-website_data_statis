@@ -3,6 +3,7 @@
 *@author: JJyy
 *@todo: get the direct or indirect transform 
 *@param: the slice of some channel_name  [1472848504:39 1472848504:129 1472848504:139 1472848505:0 1472848505:129 1472848504:39 1472848505:29 1472848504:0 1472848504:129 1472848505:129 1472848505:0 1472848504:229 147284851472848505:139 1472848504:229 1472848504:239 1472848505:229 1472848504:129] go slice type
+* if get all data start_time=0, end_time=0
 * go run main.go ip.go pv.go uv.go user_id.go -uid yahoo 1454035404(start time) 1454035490(end time)
 *@return direct_num:indirect_num
 *
