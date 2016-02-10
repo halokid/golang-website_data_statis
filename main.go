@@ -26,8 +26,8 @@ import (
 **/
 func rds() *redis.Client {
     client := redis.NewClient(&redis.Options {
-        // Addr:    "192.168.0.139:6379",
-        Addr:    "172.16.2.29:6379",
+        Addr:    "192.168.0.139:6379",
+        // Addr:    "172.16.2.29:6379",
         Password:    "",
         DB:    1,
 
@@ -98,7 +98,11 @@ func main() {
     } else if data_type == "-uv" {
         num := uv(c, channel_name, start_time, end_time)
         fmt.Println(num)
-    }
+    }  else if data_type == "-uid" {
+        num := userIds(c, channel_name, start_time, end_time)
+        fmt.Println(num)
+    } 
+	
 
 
     fmt.Println("main process")
