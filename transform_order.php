@@ -1,7 +1,7 @@
 <?php 
 /**
 *@author: JJyy
-*@todo: get the direct or indirect transform 
+*@todo: get the direct or indirect order transform 
 *@param: the slice of some channel_name  [1472848504:39 1472848504:129 1472848504:139 1472848505:0 1472848505:129 1472848504:39 1472848505:29 1472848504:0 1472848504:129 1472848505:129 1472848505:0 1472848504:229 147284851472848505:139 1472848504:229 1472848504:239 1472848505:229 1472848504:129] go slice type
 * if get all data start_time=0, end_time=0
 * go run main.go ip.go pv.go uv.go user_id.go -uid yahoo 1454035404(start time) 1454035490(end time)
@@ -22,8 +22,8 @@ function order_transform( $channel_name, $start_time, $end_time, $db='' ) {
 	
 	foreach ($slice_arr as $k => $v) {
 		$tmp_arr = explode(":", $v);
-		$direct_num += direct_tsf( $tmp_arr[1], $tmp_arr[0], $db );
-		$indirect_num += indirect_tsf( $tmp_arr[1], $channel_name, $tmp_arr[0], $db );
+		$direct_num += o_direct_tsf( $tmp_arr[1], $tmp_arr[0], $db );
+		$indirect_num += o_indirect_tsf( $tmp_arr[1], $channel_name, $tmp_arr[0], $db );
 	}
 	
 	return $direct_tsf+':'+$indirect_tsf;
@@ -36,7 +36,7 @@ function order_transform( $channel_name, $start_time, $end_time, $db='' ) {
 *@param: 
 *
 **/
-function direct_tsf($user_id, $timeset, $db='') {
+function o_direct_tsf($user_id, $timeset, $db='') {
 	if ( $user_id == 0 ) {
 		return 0;
 	}
@@ -54,7 +54,7 @@ function direct_tsf($user_id, $timeset, $db='') {
 *@param: 
 *
 **/
-function indirect_tsf($user_id, $channel_name, $timeset, $db) {
+function o_indirect_tsf($user_id, $channel_name, $timeset, $db) {
 	$sql = "select count(order_id) as cn from order_info where order_status=1 and pay_status=2 and confirm_time>".$timeset." and confirm_time<".($timeset + 3600*30);
 	$row = $db->query($sql);
 	$cn = $row['cn'];

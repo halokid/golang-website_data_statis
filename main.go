@@ -101,6 +101,9 @@ func main() {
     }  else if data_type == "-uid" {
         num := userIds(c, channel_name, start_time, end_time)
         fmt.Println(num)
+    } else if data_type == "-ruid" {
+        num := regUserIds(c, channel_name, start_time, end_time)
+        fmt.Println(num)
     } 
 	
 
