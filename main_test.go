@@ -1,3 +1,9 @@
+/**
+* Copyright 0x029 Inc. 
+* License: MIT License
+* Author: JJyy<82049406@qq.com>
+* This file is .... 
+**/
 package main
 
 import (

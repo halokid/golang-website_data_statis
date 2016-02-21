@@ -1,10 +1,9 @@
-/*
-how to use?
-sample:
-if you want to get the ip numbwer data for baidu channel, just run the command like that
-#shell:  ./statis_data -ip baidu
-
-*/
+/**
+* Copyright 0x029 Inc. 
+* License: MIT License
+* Author: JJyy<82049406@qq.com>
+* main file for this project 
+**/
 
 package main
 
@@ -104,9 +103,10 @@ func main() {
     } else if data_type == "-ruid" {
         num := regUserIds(c, channel_name, start_time, end_time)
         fmt.Println(num)
+    } else if data_type == "-route_uid" {
+        num := routeUserIds(c)
+        fmt.Println(num)
     } 
-	
-
 
     fmt.Println("main process")
 }
