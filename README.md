@@ -13,8 +13,9 @@ the RAW DATA KEY like:
 >li9t209jm7mc6m4vmn88o5a7j0:1433138813.8056:55.55.55.22:google:0
 >li9t209jm7mc6m4vmn88o5a7j0:1433138813.8056:55.55.55.22:baidu:0
 
-you can put them into to redis or some other nosql.
+this porject we store in redis
 
+you can put them into to redis or some other nosql.
 the KEY is zset type, the values of the KEY just like
 >shell> ZRANGE li9t27mskklc769vmn88o5appp:1433138814.0488:10.10.10.29:360:0 0 -1
 ><br />"www.xxxxx.com/help/999"
