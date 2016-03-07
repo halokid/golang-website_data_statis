@@ -38,6 +38,9 @@ function user_src_route () {
 	}
 	
 	print_r($route_arr);
+	foreach ($route_arr as $key => $val){
+	    
+	}
   return $route_arr;	
 }
 
