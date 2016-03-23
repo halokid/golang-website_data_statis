@@ -13,6 +13,11 @@
 *				 like user_id:src_route:time
 *
 **/
+
+define('IN_ECS', true);
+
+require(dirname(__FILE__) . '/includes/init.php');
+
 function user_src_route () {
 	// $comm =  "main.exe -ruid ".$channel_name." ".$start_time." ".$end_time;
 	$comm =  "main.exe -route_uid 0 0 0";
@@ -38,7 +43,36 @@ function user_src_route () {
 	}
 	
 	print_r($route_arr);
-  return $route_arr;	
+	$user_id = array();
+	$user_id[] = 0;
+	foreach ($route_arr as $key => $val){
+	    $user_id[] = $key;
+	}
+	
+	$sql = "select user_name, user_id from ".$ecs->table('users')." where user_id in (".implode(",", $user_id).")";
+	$user_list = $GLOBALS['db']->getAll($sql_num);
+	
+	$csvname = "csv/user_src_route_".time().".csv";
+	$file = fopen($csvname,"w");
+	$title = array('用户名称', '足迹');
+	array_walk($title,create_function('&$n', '$n=iconv("UTF-8","GB2312",$n);'));//excel开头
+	fputcsv($file,$title);
+	// echo "<pre>";
+	// print_r($user_list);
+	// exit();
+	foreach ($user_list as $key => $v){
+	    $line['user_name'] = $v['user_name'];
+	    $line['value'] = $route_arr[$v['user_id']];
+	
+	    fputcsv($file,$line);
+	}
+	
+	fclose($file);
+	
+// 	make_json_result($csvname);
+	
+	
+// 	return $route_arr;	
 }
 
 user_src_route();
